@@ -1,4 +1,4 @@
-
+[LC Link](https://leetcode.com/problems/combination-sum/)
 ### First Principles Thinking:
 
 1. **Fundamental Truths**: 

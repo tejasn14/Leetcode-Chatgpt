@@ -1,7 +1,7 @@
 ---
 ---
 ---
-[LC Link]()
+[LC Link](https://leetcode.com/problems/burst-balloons/)
 
 ----
 ---

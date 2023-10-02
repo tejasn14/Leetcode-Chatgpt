@@ -96,3 +96,65 @@ class Solution:
         return res
 
 ```
+
+The given `Solution` class provides a function `subsetsWithDup` which generates all subsets of a list `nums` without creating duplicate subsets. Let's dive into the problem step by step.
+
+### Problem-Solving Approach:
+
+**Understanding the Problem**:
+The problem asks us to generate all possible subsets of a list. The challenge lies in avoiding the creation of duplicate subsets when the input list has duplicate numbers.
+
+### Solving Intuition:
+
+**Backtracking and Decision Tree**:
+The problem can be visualized as a decision tree where for each number, you make a choice: either include the number in the subset or don't. We traverse the tree using backtracking.
+
+### Key Components:
+
+#### 1. Sorting the Input List:
+This step ensures that duplicate numbers are adjacent, helping us to easily skip over them and prevent creating duplicate subsets.
+
+#### 2. Backtracking Function `backtrack`:
+This function recursively generates subsets.
+
+### Why The Code Is Written The Way It Is:
+
+1. **Why Recursion?**: As we're exploring a decision tree, recursion is natural. At each step, we choose to either include or exclude a number.
+
+2. **Why sort?**: Sorting places duplicate numbers together. When we encounter duplicates, we can then easily skip over them to avoid duplicate subsets.
+
+3. **Why backtrack with `i`?**: The index `i` helps us traverse the list. We use it to decide whether to include the current number, `nums[i]`, in the subset or not.
+
+4. **Why `subset[::]`?**: This is a deep copy of `subset`. We don't want our result `res` to have references to `subset` which will be modified in future recursive calls.
+
+5. **Why the while loop?**: After processing a number, if the next number is the same, we skip it to avoid duplicate subsets.
+
+### Time Complexity:
+
+**O(2^N)** - For each number, we make 2 choices: include or exclude. This would generally lead to 2^N subsets. Due to duplicates, actual subsets may be fewer, but this remains the upper bound.
+
+### Space Complexity:
+
+**O(N)** - Maximum depth of the recursive call stack. This happens when we include every number from `nums`.
+
+### Base Cases and Edge Cases:
+
+1. **End of List**: The base case is when `i == len(nums)`, i.e., we have made decisions for all numbers in the list. This is when we append to `res`.
+
+2. **Empty List**: The function handles it implicitly. It would just return `[[]]`, the empty set.
+
+### Optimizing Clues:
+
+1. **Using a frequency map**: Before starting the backtracking, you could create a frequency map of the numbers. This helps you know exactly how many duplicates of each number exist, further streamlining the process.
+
+2. **Iterative approach**: Subsets can also be generated iteratively. Starting with an empty set, for each number, you create new sets by adding the number to all existing sets. 
+
+### Mnemonics to Remember:
+
+1. **"Sort to Court"**: Sorting is crucial as it sets up the stage for the main logic by placing duplicates adjacent.
+
+2. **"Choose or Lose"**: For every number, you're making a choice: include it in the subset or lose it.
+
+3. **"Skip the Repeats"**: The while loop ensures that once you've processed a number, you skip its duplicates.
+
+In essence, `subsetsWithDup` illustrates the power of backtracking combined with some preprocessing (sorting) to handle special cases (duplicates). Understanding the nature of the decision tree and the way choices branch out is crucial to solving such problems.

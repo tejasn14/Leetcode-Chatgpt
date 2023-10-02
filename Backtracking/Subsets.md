@@ -1,3 +1,4 @@
+[LC Link](https://leetcode.com/problems/subsets/)
 ### First Principles Thinking:
 
 1. **Fundamental Truths**: 

@@ -149,3 +149,61 @@ class Solution:
         return True
 
 ```
+
+Alright, let's dive deep into the problem at hand.
+
+### Problem-Solving Approach:
+
+**Understanding the Problem**:
+The problem asks to partition a string such that each partitioned substring is a palindrome. Return all possible palindrome partitioning.
+
+### Solving Intuition:
+
+The intuition behind solving this problem lies in exploring every possible partition and checking if it results in a palindrome. The depth-first search (DFS) approach makes sense since we are exploring all potential partitions.
+
+### Raw Algorithm:
+
+1. Start from the first character of the string.
+2. For each character, partition the string and see if the partition is a palindrome.
+3. If it's a palindrome, explore further by partitioning the remaining string.
+4. Backtrack if you reach an end or a non-palindromic partition.
+
+### Why The Code Is Written The Way It Is:
+
+1. **Why DFS?**: Depth First Search is apt for problems where you want to explore all possibilities from a given starting point. Here, from a character, you explore all its possible partitions.
+
+2. **Why `res` and `part`?**: `res` is used to store all valid results, and `part` is used to store the current palindrome partitions.
+
+3. **Why recursive `dfs`?**: For each palindrome found, we want to explore further partitions for the remaining string. Recursion naturally fits this "explore and move further" approach.
+
+4. **Why `isPali` function?**: Checking for a palindrome is a repeated task in this problem, so encapsulating it in a function simplifies the code.
+
+5. **Why the while loop in `isPali`?**: This is the classic two-pointer approach to check for palindrome, starting from both ends and moving towards the center.
+
+### Time Complexity:
+
+**O(2^n * n)**: This is a rough upper bound. `2^n` comes from the fact that in the worst case, for a string of length `n`, we can have 2 choices (split or not) for each character, and the `n` factor is due to the palindrome check for each substring.
+
+### Space Complexity:
+
+**O(n^2)**: This is because in the worst case, we may end up storing all substrings which are palindromes. The recursive call stack will also contribute, but its contribution is O(n), which is overshadowed by O(n^2).
+
+### Base Cases and Edge Cases:
+
+1. **Base Case inside `dfs`**: If `i >= len(s)`, we have processed the whole string and can store the current partitioning.
+
+2. **Edge Case**: None in particular for this problem since we are processing the entire string.
+
+### Optimizing Clues:
+
+1. **Caching palindrome results**: The same substrings can be checked multiple times to see if they're palindromes. One can optimize the `isPali` function by using memoization to store results of past checks to avoid repeated work.
+
+### Mnemonics to Remember:
+
+1. **"Partition Palindromes"**: This will remind you that you are partitioning the string and then checking for palindromes.
+   
+2. **"DFS dives deep"**: This will remind you to dive deep into each possible partition and then backtrack.
+
+3. **"Two-pointers for Palindrome"**: For checking palindromes, always remember the two-pointer approach, starting from both ends and moving inward.
+
+In essence, the problem is a classic backtracking problem where you explore all possible partitions, backtrack when needed, and use the DFS approach to dive deep into each possibility. The key is to optimize the palindrome check to make the solution efficient.

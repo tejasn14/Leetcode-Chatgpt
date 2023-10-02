@@ -114,3 +114,66 @@ class Solution:
     # O(n * m * 4^n)
 
 ```
+
+Let's break down this solution using the `exist` function in the `Solution` class which determines if a given word can be constructed from sequential characters in the 2D `board`.
+
+### Problem-Solving Approach:
+
+**Understanding the Problem**:
+The problem is essentially a path-finding problem on a 2D grid where each path step should correspond to a letter in the word.
+
+### Solving Intuition:
+
+The first thing that comes to mind is a depth-first search (DFS) approach since we are exploring paths on a grid.
+
+### Raw Algorithm:
+
+1. Start from each cell in the board.
+2. Explore all four directions: up, down, left, right.
+3. For each direction, check if it forms a valid path corresponding to the word.
+4. Track visited cells to avoid cycles.
+
+### Why The Code Is Written The Way It Is:
+
+1. **Why DFS?**: Depth First Search is a common approach to explore paths on a grid. Since we want to find a path corresponding to a word, DFS becomes a natural choice.
+
+2. **Why `path` set?**: We maintain a `path` set to keep track of cells that we've visited so that we don't revisit them within the same path (avoids cycles).
+
+3. **Why the condition inside `dfs`?**: The condition checks several things:
+   - Whether the current cell is within the board boundaries.
+   - Whether the current cell matches the current character in the word.
+   - Whether the current cell was already visited in the current path.
+
+4. **Why the word reversal optimization?**: By examining the letter frequencies in the board, we can decide to reverse the word. If the first letter of the word is more common than the last letter, we start with the less frequent (last) letter. This reduces the number of failed attempts and avoids a potential time limit exceeded error (TLE).
+
+5. **Why loop over all cells?**: Since we aren't given a starting point, we need to attempt to form the word starting from every cell in the board.
+
+### Time Complexity:
+
+**O(n * m * 4^l)**: Where `n` is the number of rows in the board, `m` is the number of columns, and `l` is the length of the word. For every cell in the board, we explore in 4 directions and this can potentially go on for the length of the word.
+
+### Space Complexity:
+
+**O(l)**: This is due to the recursive stack during DFS, where `l` is the length of the word.
+
+### Base Cases and Edge Cases:
+
+1. **Base Case inside `dfs`**: If `i == len(word)`, it means we've successfully formed the word and we return `True`.
+
+2. **Edge Case**: A cell that's already in the current path, or a cell that doesn't match the current letter in the word, or if the cell is out of the board boundaries - we return `False`.
+
+### Optimizing Clues:
+
+1. **Pruning**: If at any point we know that a path cannot form the word, we can stop exploring further. The condition inside `dfs` does this.
+   
+2. **Letter Frequency Optimization**: The letter frequency check helps optimize the starting point. By choosing a less frequent letter as a starting point, we can reduce the search space.
+
+### Mnemonics to Remember:
+
+1. **"Dive with DFS"**: The core of the solution is diving deep with DFS to explore potential paths.
+   
+2. **"Track your Path"**: Always remember to track the path using the `path` set to avoid cycles.
+
+3. **"Reverse to Revert"**: When the start is more frequent than the end, reverse the word to optimize.
+
+Overall, this problem showcases the power of DFS on a 2D grid and emphasizes the importance of path tracking and optimization tricks to enhance performance.

@@ -131,3 +131,61 @@ class Solution:
         return res
 
 ```
+
+Let's break down the problem and solution using the 1st principles of problem-solving approach:
+
+### Problem-Solving Approach:
+
+**Understanding the Problem**:
+Given an `n x n` chessboard, place `n` queens on the board such that no two queens threaten each other. Return all distinct solutions.
+
+### Solving Intuition:
+
+The key observation is that a queen threatens another queen if they're on the same row, same column, or the same diagonal. Hence, in a valid solution, each row must have exactly one queen, and so must each column. Furthermore, diagonals which contain queens must not intersect.
+
+### Raw Algorithm:
+
+1. Use backtracking to explore all possible positions of placing queens row by row.
+2. For each row, try placing a queen in each column and check if it's a valid position (i.e., it doesn't conflict with previously placed queens).
+
+### Why The Code Is Written The Way It Is:
+
+1. **Sets `col`, `posDiag`, and `negDiag`**: To quickly verify if placing a queen on a specific spot is valid, we need to check the columns and the two diagonals. Using sets gives O(1) complexity for insertion, deletion, and lookup.
+   - `col` set ensures that no two queens share the same column.
+   - `posDiag` and `negDiag` are a clever way to check diagonals. For any cell `(r, c)`, cells on its positive diagonal (`/`) have the same `r+c` value, and cells on its negative diagonal (`\`) have the same `r-c` value.
+
+2. **Why `backtrack(r)` function?**: This function explores placing a queen on row `r`. We recurse row by row, placing a queen and then proceeding to the next row.
+
+3. **Base Case inside `backtrack`**: When `r == n`, it means a queen has been placed on every row, indicating a complete solution.
+
+4. **`if c in col or (r + c) in posDiag or (r - c) in negDiag:`**: Before placing a queen, we ensure that the current cell doesn't lie in a column or diagonal that already has a queen.
+
+5. **`board` variable**: This 2D list represents the chessboard. We use it to construct the solution once we've placed all the queens.
+
+6. **Why do we remove from sets and reset the board after the recursive call?**: This is the essence of backtracking. We undo the changes so that we can explore other potential solutions.
+
+### Time Complexity:
+
+**O(N!)**: In the worst case, we could consider it similar to permutation for placement of queens. However, it's much better in practice due to early pruning (we skip invalid positions early on).
+
+### Space Complexity:
+
+**O(N)**: While the board itself is `n x n`, our recursive call stack (depth of recursion) will be `N` deep, and our sets will store at most `N` elements each.
+
+### Base Cases and Edge Cases:
+
+1. **Base Case inside `backtrack`**: A solution is found when we've placed queens on all rows, i.e., `r == n`.
+2. **Edge Cases**: The solution is general and does not have specific edge cases apart from the base case.
+
+### Optimizing Clues:
+
+1. **Bitsets**: Rather than using sets, some optimizations can be achieved using bitsets to represent columns and diagonals.
+2. **Symmetry**: Half of the solutions are symmetric, so we can just generate half and then derive the rest.
+
+### Mnemonics to Remember:
+
+1. **"Row by Row"**: Remind yourself that you're placing queens row by row.
+2. **"Col and Diags"**: These are the key entities we need to watch out for conflicts. Using `col`, `posDiag`, and `negDiag` helps us keep track of threats efficiently.
+3. **"Backtrack the Board"**: At the heart of the solution is a backtracking approach, where we explore potential placements and undo them if they don't lead to a solution.
+
+By understanding the rules of chess, particularly how the queen moves, and by employing a backtracking technique, the solution explores all possible configurations of queens on the board, returning those that meet the criteria.
